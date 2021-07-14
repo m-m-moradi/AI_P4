@@ -177,7 +177,7 @@ def probablity_of_sentense(sentence, unigram_dict, bigram_dict, number_of_words,
     sentence = clean([sentence])[0]
 
     total_probablity = unigram_probablity(sentence[0], unigram_dict, number_of_words)
-    if log: print(f'w0  : {sentence[0]:<47}, prob:{total_probablity:20}')
+    if log: print(f'w0  : {sentence[0]:<47}, prob:{total_probablity:<30}')
     
     for i in range(1, len(sentence) - 1):
         first_word = sentence[i]
@@ -185,7 +185,7 @@ def probablity_of_sentense(sentence, unigram_dict, bigram_dict, number_of_words,
         p = interpolated_bigram_probablity(first_word, second_word, unigram_dict, bigram_dict, number_of_words)
         total_probablity *= p
         
-        if log: print(f'w{i:<3}: {first_word:<20}, w{i+1:<3}:{second_word:<20}, prob:{p:<20}')
+        if log: print(f'w{i:<3}: {first_word:<20}, w{i+1:<3}:{second_word:<20}, prob:{p:<30}')
         
     if log: print(f'FINAL PROBABILITY: {total_probablity:}\n')
     return total_probablity
@@ -242,8 +242,8 @@ positive_language_data ={
 
 log = False
 successful_detection = 0
-for positive_sentences in pos_test_dataset:
-    detected = detect_language(positive_sentences, positive_language_data, negative_language_data, log=log)
+for positive_sentence in pos_test_dataset:
+    detected = detect_language(positive_sentence, positive_language_data, negative_language_data, log=log)
     if log: print(f'detected : {detected}')
     if detected == 0:
         successful_detection += 1
@@ -251,8 +251,8 @@ for positive_sentences in pos_test_dataset:
 print(f'Accuracy: {successful_detection / len(pos_test_dataset)}')
 
 successful_detection = 0
-for negative_sentences in neg_test_dataset:
-    detected = detect_language(negative_sentences, negative_language_data, negative_language_data, log=log)
+for negative_sentence in neg_test_dataset:
+    detected = detect_language(negative_sentence, positive_language_data, negative_language_data, log=log)
     if log: print(f'detected : {detected}')
     if detected == 1:
         successful_detection += 1
